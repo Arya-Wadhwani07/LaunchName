@@ -1,0 +1,19 @@
+version: "3.9"
+
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.local
+    networks:
+      - launchname-net
+    restart: unless-stopped
+
+networks:
+  # A dedicated network for just this app, instead of Docker's shared
+  # default bridge network. Keeps this container from being able to
+  # freely talk to any other unrelated container you might have running.
+  launchname-net:
+    driver: bridge

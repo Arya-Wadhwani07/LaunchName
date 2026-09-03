@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * MUI's CssBaseline (theme/components.ts, MuiCssBaseline override) owns
+ * the reset, body background/color, font smoothing, and reduced-motion
+ * guard — this file only holds effect/motion utility classes that don't
+ * have a natural MUI equivalent (gradient meshes, stagger timing, the
+ * flashcard 3D flip), used via className alongside MUI components.
+ */
+
+.bg-noise {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.035) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #26262f;
+  border-radius: 999px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* A soft two-tone gradient mesh, used behind hero/section headers instead
+   of a single flat radial blob. Pair with .animate-drift for a slow,
+   ambient sense of motion — never fast enough to distract. */
+.bg-mesh {
+  background-image:
+    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(124, 92, 255, 0.16), transparent 60%),
+    radial-gradient(ellipse 50% 45% at 85% 25%, rgba(255, 92, 173, 0.11), transparent 60%),
+    radial-gradient(ellipse 55% 50% at 50% 90%, rgba(124, 92, 255, 0.08), transparent 60%);
+}
+
+/* Elevation-on-hover for the rare custom (non-MuiCard) surface — MuiCard
+   already gets this from theme/components.ts. */
+.elevate {
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease;
+}
+.elevate:hover {
+  transform: translateY(-3px);
+  box-shadow: theme("boxShadow.elevation-3");
+}
+
+/* Stagger helper: pass an inline --stagger-index custom property and every
+   child using this class fades up in sequence rather than all at once. */
+.stagger-item {
+  animation: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(var(--stagger-index, 0) * 60ms);
+}
+
+/* ---- Flashcard flip ---- */
+.flip-scene {
+  perspective: 1600px;
+}
+.flip-card {
+  transform-style: preserve-3d;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.flip-card.is-flipped {
+  transform: rotateY(180deg);
+}
+.flip-face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flip-face-back {
+  transform: rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
