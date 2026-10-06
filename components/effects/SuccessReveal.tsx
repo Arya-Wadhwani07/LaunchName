@@ -1,7 +1,7 @@
 "use client";
 
 import Box from "@mui/material/Box";
-import CheckIcon from "@mui/icons-material/Check";
+import { CheckIcon } from "@phosphor-icons/react";
 
 /**
  * The "wow" moment after a real registration completes — three
@@ -37,13 +37,13 @@ export function SuccessReveal() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "rgba(61,220,151,0.12)",
+          backgroundColor: "rgba(58,217,183,0.12)",
           border: "1px solid",
-          borderColor: "rgba(61,220,151,0.4)",
-          boxShadow: "0 0 24px rgba(61,220,151,0.25)",
+          borderColor: "rgba(58,217,183,0.4)",
+          boxShadow: "0 0 24px rgba(58,217,183,0.25)",
         }}
       >
-        <CheckIcon sx={{ color: "success.main", fontSize: 28 }} />
+        <Box component="span" sx={{ display: "inline-flex", color: "success.main" }}><CheckIcon size={28} weight="bold" aria-hidden /></Box>
       </Box>
     </Box>
   );

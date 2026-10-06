@@ -67,19 +67,22 @@ const base = createTheme({
   },
   typography: {
     fontFamily: font.sans,
+    // Hierarchy: serif display/h1–h4 for page and section titles (the
+    // stressed level), Inter h5/h6 + body for UI and content, mono for data.
     display: {
-      fontFamily: font.sans,
+      fontFamily: font.display,
       fontWeight: 600,
+      fontVariationSettings: '"SOFT" 50, "opsz" 144',
       fontSize: "clamp(2.5rem, 2rem + 2vw, 3.75rem)",
       lineHeight: 1.08,
-      letterSpacing: "-0.02em",
+      letterSpacing: "-0.005em",
     },
-    h1: { fontWeight: 600, fontSize: "2.5rem", lineHeight: 1.15, letterSpacing: "-0.015em" },
-    h2: { fontWeight: 600, fontSize: "2rem", lineHeight: 1.2, letterSpacing: "-0.01em" },
-    h3: { fontWeight: 600, fontSize: "1.5rem", lineHeight: 1.25, letterSpacing: "-0.005em" },
-    h4: { fontWeight: 600, fontSize: "1.25rem", lineHeight: 1.3 },
+    h1: { fontFamily: font.display, fontWeight: 600, fontSize: "2.5rem", lineHeight: 1.12, letterSpacing: "-0.015em" },
+    h2: { fontFamily: font.display, fontWeight: 600, fontSize: "2rem", lineHeight: 1.18, letterSpacing: "-0.01em" },
+    h3: { fontFamily: font.display, fontWeight: 600, fontSize: "1.625rem", lineHeight: 1.22, letterSpacing: "-0.01em" },
+    h4: { fontFamily: font.display, fontWeight: 600, fontSize: "clamp(1.625rem, 1.35rem + 0.9vw, 2.125rem)", lineHeight: 1.2, letterSpacing: "-0.01em" },
     h5: { fontWeight: 600, fontSize: "1.0625rem", lineHeight: 1.35 },
-    h6: { fontWeight: 600, fontSize: "0.9375rem", lineHeight: 1.4 },
+    h6: { fontWeight: 600, fontSize: "1rem", lineHeight: 1.4, color: color.ink.primary },
     subtitle1: { fontSize: "1rem", lineHeight: 1.5, color: color.ink.secondary },
     subtitle2: { fontSize: "0.875rem", lineHeight: 1.5, fontWeight: 500, color: color.ink.secondary },
     body1: { fontSize: "0.9375rem", lineHeight: 1.6 },
@@ -91,7 +94,7 @@ const base = createTheme({
       fontWeight: 600,
       letterSpacing: "0.08em",
       textTransform: "uppercase",
-      color: color.primary.light,
+      color: color.support.light,
     },
     mono: {
       fontFamily: font.mono,

@@ -1,3 +1,4 @@
+import { LogoMark } from "@/components/brand/LogoMark";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -17,7 +18,7 @@ export default function FlashcardsPage() {
 
       <Box component="nav" sx={{ position: "relative", mx: "auto", maxWidth: 1152, display: "flex", alignItems: "center", justifyContent: "space-between", px: 3, py: 3 }}>
         <Link href="/" style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <Box sx={{ height: 24, width: 24, borderRadius: 1.5, background: "linear-gradient(135deg, #7c5cff, #5c3fd9)", boxShadow: 2 }} />
+          <LogoMark size={24} />
           <Typography sx={{ fontWeight: 600, letterSpacing: "-0.01em" }}>LaunchName</Typography>
         </Link>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>

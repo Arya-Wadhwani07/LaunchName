@@ -6,3 +6,6 @@ out
 *.log
 scripts/.venv
 .research/
+*.tsbuildinfo
+.DS_Store
+.npm-cache/

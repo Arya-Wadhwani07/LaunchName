@@ -12,7 +12,9 @@ export const TTL_MAX = 86400;
 const IPV4_RE = /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
 const IPV6_RE = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$/;
 const HOSTNAME_RE = /^(?=.{1,253}$)([a-zA-Z0-9]([a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?\.)*[a-zA-Z]{2,63}\.?$/;
-const HOST_LABEL_RE = /^(@|[a-zA-Z0-9*]([a-zA-Z0-9-_]{0,61}[a-zA-Z0-9])?(\.[a-zA-Z0-9]([a-zA-Z0-9-_]{0,61}[a-zA-Z0-9])?)*)$/;
+// Labels may start with "_" for service records (_dmarc, selector._domainkey,
+// _agent-discovery), and the first label may be a "*" wildcard.
+const HOST_LABEL_RE = /^(@|(\*|_?[a-zA-Z0-9]([a-zA-Z0-9-_]{0,61}[a-zA-Z0-9])?)(\._?[a-zA-Z0-9]([a-zA-Z0-9-_]{0,61}[a-zA-Z0-9])?)*)$/;
 
 export interface DnsRecordDraft {
   type: DnsRecordType | "";

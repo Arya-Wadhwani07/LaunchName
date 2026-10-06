@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useLaunch } from "@/context/LaunchContext";
 import { LaunchChecklist } from "@/components/domain/LaunchChecklist";
 import { ActivityStream } from "@/components/domain/ActivityStream";
@@ -15,6 +14,7 @@ import { CapabilityChip } from "@/components/agent/CapabilityChip";
 import { SuccessReveal } from "@/components/effects/SuccessReveal";
 import { Button, Badge, Card } from "@/components/ui/primitives";
 import { DnsManager } from "@/features/dns/DnsManager";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 
 export function LaunchCenterStep() {
   const { state } = useLaunch();
@@ -109,13 +109,13 @@ export function LaunchCenterStep() {
 
       <Box sx={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: 1.5, mt: 5 }}>
         <Link href={`/site/${launch.slug}`} target="_blank">
-          <Button size="lg" endIcon={<ArrowForwardIcon />}>
+          <Button size="lg" endIcon={<ArrowRightIcon size={20} aria-hidden />}>
             Open your site
           </Button>
         </Link>
         {agent && (
           <Link href={`/agents/${agent.host}/connect`}>
-            <Button size="lg" endIcon={<ArrowForwardIcon />}>
+            <Button size="lg" endIcon={<ArrowRightIcon size={20} aria-hidden />}>
               Talk to your agent
             </Button>
           </Link>

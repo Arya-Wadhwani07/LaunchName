@@ -1,3 +1,4 @@
+import { LogoMark } from "@/components/brand/LogoMark";
 import Link from "next/link";
 import { FlowDiagram } from "@/features/about/FlowDiagram";
 import { PoweredByBadge } from "@/components/domain/PoweredBy";
@@ -16,7 +17,7 @@ export default function AboutPage() {
 
       <nav className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
         <Link href="/" className="flex items-center gap-2">
-          <div className="h-6 w-6 rounded-md bg-gradient-to-br from-accent to-accent-dim shadow-elevation-accent" />
+          <LogoMark size={24} />
           <span className="font-semibold tracking-tight">LaunchName</span>
         </Link>
         <div className="flex items-center gap-4">
@@ -35,7 +36,7 @@ export default function AboutPage() {
 
       <section className="relative mx-auto max-w-3xl px-6 pb-8 pt-16 text-center">
         <div className="mb-4 animate-fade-up font-mono text-xs uppercase tracking-widest text-accent-soft">How it works</div>
-        <h1 className="animate-fade-up text-balance text-4xl font-semibold tracking-tight text-ink [animation-delay:60ms] sm:text-5xl">
+        <h1 className="animate-fade-up text-balance font-display text-4xl font-semibold text-ink [animation-delay:60ms] sm:text-5xl">
           One idea. A real domain. Optionally, a real agent.
         </h1>
         <p className="mt-5 animate-fade-up text-balance text-lg leading-relaxed text-ink-muted [animation-delay:120ms]">
@@ -69,7 +70,7 @@ export default function AboutPage() {
       </section>
 
       <section className="relative mx-auto max-w-2xl px-6 py-16 text-center">
-        <h2 className="text-2xl font-semibold tracking-tight text-ink">See it end to end</h2>
+        <h2 className="font-display text-3xl font-semibold text-ink">See it end to end</h2>
         <p className="mt-2 text-sm text-ink-faint">Ninety seconds, start to finish, or explore it a piece at a time.</p>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
           <Link href="/launch?idea=An%20AI-powered%20study%20planner%20for%20college%20students&demo=1">

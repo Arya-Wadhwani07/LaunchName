@@ -94,8 +94,8 @@ const STAGES: Stage[] = [
 ];
 
 const POWER_SX: Record<Power, { color: string; borderColor: string; bgcolor: string }> = {
-  "name.com": { color: "success.main", borderColor: "rgba(61,220,151,0.3)", bgcolor: "rgba(61,220,151,0.1)" },
-  Claude: { color: "secondary.light", borderColor: "rgba(255,92,173,0.3)", bgcolor: "rgba(255,92,173,0.1)" },
+  "name.com": { color: "success.main", borderColor: "rgba(58,217,183,0.3)", bgcolor: "rgba(58,217,183,0.1)" },
+  Claude: { color: "secondary.light", borderColor: "rgba(255,162,71,0.3)", bgcolor: "rgba(255,162,71,0.1)" },
   LaunchName: { color: "primary.light", borderColor: "rgba(124,92,255,0.3)", bgcolor: "rgba(124,92,255,0.1)" },
 };
 

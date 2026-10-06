@@ -1,19 +1,75 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import TextField from "@mui/material/TextField";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Button } from "@/components/ui/primitives";
-import { PoweredByBadge } from "@/components/domain/PoweredBy";
-import { NetworkBackground } from "@/components/effects/NetworkBackground";
+import { AuroraBackground } from "@/components/effects/AuroraBackground";
+import { ArrowRightIcon, PlayCircleIcon, CardsIcon } from "@phosphor-icons/react";
+import { motion, useReducedMotion, type Variants } from "motion/react";
+import { Milestones } from "./Milestones";
+import { LandingNav } from "./LandingNav";
+import { DnsLookupScene } from "./DnsLookupScene";
+
+const SPRING = { type: "spring", bounce: 0.2, visualDuration: 0.4 } as const;
+const heroContainer: Variants = { hidden: {}, show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } } };
+const heroItem: Variants = {
+  hidden: { opacity: 0, y: 18, filter: "blur(6px)" },
+  show: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] } },
+};
 
 const CHIPS = ["AI fitness coach", "College marketplace", "Developer SaaS", "Creator brand"];
 const DEMO_IDEA = "An AI-powered study planner for college students";
+
+const TYPED_IDEAS = [
+  "An AI fitness coach for marathon runners",
+  "A marketplace for used college textbooks",
+  "A code review bot for small dev teams",
+  "A meal planner for busy parents",
+];
+
+/** Types example ideas into the placeholder until the user focuses or types. */
+function useTypedPlaceholder(active: boolean) {
+  const reduce = useReducedMotion();
+  const [text, setText] = useState("");
+  useEffect(() => {
+    if (!active || reduce) return;
+    let idea = 0;
+    let chars = 0;
+    let deleting = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const full = TYPED_IDEAS[idea];
+      if (!deleting) {
+        chars += 1;
+        setText(full.slice(0, chars));
+        if (chars === full.length) {
+          deleting = true;
+          timer = setTimeout(tick, 1700);
+          return;
+        }
+        timer = setTimeout(tick, 38 + Math.random() * 40);
+      } else {
+        chars -= 1;
+        setText(full.slice(0, chars));
+        if (chars === 0) {
+          deleting = false;
+          idea = (idea + 1) % TYPED_IDEAS.length;
+          timer = setTimeout(tick, 350);
+          return;
+        }
+        timer = setTimeout(tick, 18);
+      }
+    };
+    timer = setTimeout(tick, 1400);
+    return () => clearTimeout(timer);
+  }, [active, reduce]);
+  return active && !reduce ? text : "";
+}
 
 const UNDERSTANDING_STAGES = ["Understanding your idea…", "Exploring naming directions…", "Checking domain possibilities…"];
 
@@ -21,6 +77,8 @@ export function Hero() {
   const router = useRouter();
   const [idea, setIdea] = useState("");
   const [stage, setStage] = useState<number | null>(null);
+  const [focused, setFocused] = useState(false);
+  const typed = useTypedPlaceholder(!focused && idea === "");
 
   function start(value: string, demo = false) {
     const trimmed = value.trim();
@@ -47,32 +105,11 @@ export function Hero() {
   }
 
   return (
-    <Box sx={{ position: "relative", overflow: "hidden" }}>
-      <Box className="bg-noise" sx={{ position: "absolute", inset: 0, opacity: 0.4, pointerEvents: "none" }} />
-      <NetworkBackground className="pointer-events-none" />
-      <Box className="bg-mesh" sx={{ position: "absolute", inset: "-220px 0 auto 0", height: 640, pointerEvents: "none" }} />
-
-      <Box
-        component="nav"
-        sx={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 1152, mx: "auto", px: 3, py: 3 }}
-      >
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-          <Box sx={{ width: 24, height: 24, borderRadius: 1, background: "linear-gradient(135deg, #7c5cff, #5b3fd6)", boxShadow: (t) => t.shadows[2] }} />
-          <Typography sx={{ fontWeight: 600, letterSpacing: "-0.01em" }}>LaunchName</Typography>
-        </Box>
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>
-          <Typography component="a" href="/agents" variant="body2" sx={{ display: { xs: "none", sm: "block" }, color: "text.secondary", textDecoration: "none", "&:hover": { color: "text.primary" } }}>
-            Agent Directory
-          </Typography>
-          <Typography component="a" href="/about" variant="body2" sx={{ display: { xs: "none", sm: "block" }, color: "text.secondary", textDecoration: "none", "&:hover": { color: "text.primary" } }}>
-            About
-          </Typography>
-          <Typography component="a" href="/dashboard" variant="body2" sx={{ color: "text.secondary", textDecoration: "none", "&:hover": { color: "text.primary" } }}>
-            Dashboard
-          </Typography>
-          <PoweredByBadge className="hidden sm:inline-flex" />
-        </Box>
-      </Box>
+    <Box sx={{ position: "relative", overflowX: "clip" }}>
+      <LandingNav />
+      <Box sx={{ position: "relative" }}>
+      <Box className="bg-noise" sx={{ position: "absolute", inset: 0, opacity: 0.35, pointerEvents: "none" }} />
+      <AuroraBackground />
 
       <Box
         component="section"
@@ -84,34 +121,35 @@ export function Hero() {
           maxWidth: 720,
           mx: "auto",
           px: 3,
-          pb: { xs: 12, sm: 16 },
-          pt: { xs: 8, sm: 12 },
+          pb: { xs: 4, sm: 6 },
+          pt: { xs: 25, sm: 24 },
           textAlign: "center",
         }}
       >
-        <Chip
-          label="Idea → brand → domain → live, in one flow"
-          size="small"
-          variant="outlined"
-          className="animate-fade-up"
-          sx={{ mb: 3, color: "text.secondary", borderColor: "divider" }}
-        />
-        <Typography variant="display" component="h1" className="animate-fade-up text-balance" sx={{ color: "text.primary", animationDelay: "60ms" }}>
+        <motion.div variants={heroContainer} initial="hidden" animate="show" style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+        <motion.div variants={heroItem} style={{ marginBottom: 28 }}>
+          <Milestones />
+        </motion.div>
+        <motion.div variants={heroItem}>
+        <Typography variant="display" component="h1" className="text-balance" sx={{ color: "text.primary" }}>
           Your next idea deserves a{" "}
-          <Box component="span" sx={{ background: "linear-gradient(90deg, #a98bff, #7c5cff, #ff5cad)", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}>
+          <motion.span
+            style={{ display: "inline-block", backgroundImage: "linear-gradient(90deg, #a18aff, #7c5cff, #ffa247, #a18aff)", backgroundSize: "300% 100%", WebkitBackgroundClip: "text", backgroundClip: "text", color: "transparent" }}
+            animate={{ backgroundPosition: ["0% 50%", "100% 50%"] }}
+            transition={{ duration: 8, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          >
             home
-          </Box>
+          </motion.span>
           .
         </Typography>
-        <Typography
-          variant="subtitle1"
-          className="animate-fade-up text-balance"
-          sx={{ mt: 2.5, maxWidth: 560, fontSize: "1.125rem", animationDelay: "120ms" }}
-        >
+        </motion.div>
+        <motion.div variants={heroItem}>
+        <Typography variant="subtitle1" className="text-balance" sx={{ mt: 2.5, maxWidth: 560, fontSize: "1.125rem" }}>
           Find the right domain, establish your agent identity, and become discoverable on the agentic internet.
         </Typography>
+        </motion.div>
 
-        <Box className="animate-fade-up" sx={{ mt: 5, width: "100%", maxWidth: 560, animationDelay: "180ms" }}>
+        <motion.div variants={heroItem} style={{ width: "100%", maxWidth: 560, marginTop: 40 }}>
           {stage === null ? (
             <>
               <Box
@@ -123,64 +161,71 @@ export function Hero() {
                   borderRadius: 3,
                   border: 1,
                   borderColor: "divider",
-                  backgroundColor: "background.paper",
-                  transition: "border-color 150ms ease",
-                  "&:focus-within": { borderColor: "primary.main" },
+                  backgroundColor: "rgba(14,13,17,0.72)",
+                  backdropFilter: "blur(12px)",
+                  transition: "border-color 150ms ease, box-shadow 200ms ease",
+                  "&:hover": { borderColor: "rgba(255,255,255,0.14)" },
+                  "&:focus-within": { borderColor: "primary.main", boxShadow: "0 0 0 4px rgba(124,92,255,0.18), 0 20px 50px -20px rgba(124,92,255,0.6)" },
                 }}
               >
                 <TextField
+                  id="idea-input"
                   value={idea}
                   onChange={(e) => setIdea(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && start(idea)}
-                  placeholder="What are you building?"
+                  placeholder={typed ? `${typed}▍` : "What are you building?"}
+                  onFocus={() => setFocused(true)}
+                  onBlur={() => setFocused(false)}
                   variant="standard"
                   fullWidth
-                  slotProps={{ input: { disableUnderline: true, sx: { fontSize: "0.9375rem", px: 1.5, height: 48 } } }}
+                  slotProps={{ input: { disableUnderline: true, sx: { fontSize: "0.9375rem", px: 1.5, height: 48 } }, htmlInput: { "aria-label": "What are you building?" } }}
                   sx={{ flex: 1 }}
                 />
-                <Button size="lg" onClick={() => start(idea)} disabled={!idea.trim()} endIcon={<ArrowForwardIcon />} sx={{ flexShrink: 0 }}>
+                <Button size="lg" onClick={() => start(idea)} disabled={!idea.trim()} endIcon={<ArrowRightIcon size={20} aria-hidden />} sx={{ flexShrink: 0 }}>
                   Start my launch
                 </Button>
               </Box>
 
               <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap", justifyContent: "center", mt: 2.5, rowGap: 1 }}>
                 {CHIPS.map((chip) => (
-                  <Chip
-                    key={chip}
-                    label={chip}
-                    size="small"
-                    variant="outlined"
-                    onClick={() => setIdea(chip)}
-                    sx={{
-                      color: "text.secondary",
-                      borderColor: "divider",
-                      transition: "border-color 150ms ease, color 150ms ease",
-                      "&:hover": { borderColor: "rgba(124,92,255,0.4)", color: "text.primary" },
-                    }}
-                  />
+                  <motion.span key={chip} whileHover={{ y: -2, scale: 1.04 }} whileTap={{ scale: 0.95 }} transition={SPRING} style={{ display: "inline-flex" }}>
+                    <Chip
+                      label={chip}
+                      size="small"
+                      variant="outlined"
+                      onClick={() => setIdea(chip)}
+                      sx={{
+                        color: idea === chip ? "primary.light" : "text.secondary",
+                        borderColor: idea === chip ? "rgba(124,92,255,0.55)" : "divider",
+                        backgroundColor: "rgba(14,13,17,0.5)",
+                        transition: "border-color 150ms ease, color 150ms ease",
+                        "&:hover": { borderColor: "rgba(124,92,255,0.45)", color: "text.primary", backgroundColor: "rgba(124,92,255,0.08) !important" },
+                      }}
+                    />
+                  </motion.span>
                 ))}
               </Box>
 
               <Box sx={{ display: "flex", gap: 2, justifyContent: "center", alignItems: "center", mt: 3 }}>
-                <Typography
-                  component="button"
+                <motion.button
+                  type="button"
                   onClick={() => start(DEMO_IDEA, true)}
-                  variant="caption"
-                  sx={{ background: "none", border: "none", cursor: "pointer", textDecoration: "underline dotted", textUnderlineOffset: "4px", "&:hover": { color: "primary.light" } }}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={SPRING}
+                  className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs text-ink-muted transition-colors hover:bg-white/[0.05] hover:text-accent-soft"
                 >
-                  Or try the demo →
-                </Typography>
-                <Typography variant="caption" sx={{ color: "text.disabled" }}>
-                  ·
-                </Typography>
-                <Typography
-                  component="a"
+                  <PlayCircleIcon size={15} weight="duotone" aria-hidden /> Try the demo
+                </motion.button>
+                <motion.a
                   href="/flashcards"
-                  variant="caption"
-                  sx={{ textDecoration: "underline dotted", textUnderlineOffset: "4px", "&:hover": { color: "secondary.light" } }}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={SPRING}
+                  className="inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs text-ink-muted transition-colors hover:bg-white/[0.05] hover:text-accent2-soft"
                 >
-                  Explore in flashcards →
-                </Typography>
+                  <CardsIcon size={15} weight="duotone" aria-hidden /> Explore in flashcards
+                </motion.a>
               </Box>
             </>
           ) : (
@@ -191,10 +236,14 @@ export function Hero() {
               </Typography>
             </Box>
           )}
-        </Box>
+        </motion.div>
+        </motion.div>
+      </Box>
       </Box>
 
-      <Box component="section" sx={{ position: "relative", borderTop: 1, borderColor: "divider", backgroundColor: "rgba(18,18,24,0.4)" }}>
+      <DnsLookupScene />
+
+      <Box component="section" sx={{ position: "relative", borderTop: 1, borderColor: "divider", backgroundColor: "rgba(14,13,17,0.4)" }}>
         <Box
           sx={{
             display: "grid",
@@ -216,7 +265,15 @@ export function Hero() {
               body: "Today they tell humans where to find you. LaunchName lets the same domain and DNS infrastructure tell AI agents who you are, what you can do, and how to reach you.",
             },
           ].map((s, i) => (
-            <Box key={s.eyebrow} className="stagger-item" style={{ "--stagger-index": i } as React.CSSProperties}>
+            <motion.div
+              key={s.eyebrow}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.4 }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ y: -4 }}
+              className="rounded-2xl border border-transparent p-4 transition-colors duration-200 hover:border-surface-border hover:bg-white/[0.02]"
+            >
               <Typography variant="overline" sx={{ display: "block", mb: 1.5 }}>
                 {s.eyebrow}
               </Typography>
@@ -224,7 +281,7 @@ export function Hero() {
                 {s.title}
               </Typography>
               <Typography variant="body2">{s.body}</Typography>
-            </Box>
+            </motion.div>
           ))}
         </Box>
       </Box>

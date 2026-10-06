@@ -6,10 +6,9 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import IconButton from "@mui/material/IconButton";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Button } from "@/components/ui/primitives";
 import { Skeleton } from "@/components/ui/data";
+import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
 
 interface Card {
   key: string;
@@ -89,8 +88,8 @@ const CARDS: Card[] = [
 ];
 
 const POWER_SX: Record<string, { color: string; borderColor: string; bgcolor: string }> = {
-  "name.com": { color: "success.main", borderColor: "rgba(61,220,151,0.3)", bgcolor: "rgba(61,220,151,0.1)" },
-  Claude: { color: "secondary.light", borderColor: "rgba(255,92,173,0.3)", bgcolor: "rgba(255,92,173,0.1)" },
+  "name.com": { color: "success.main", borderColor: "rgba(58,217,183,0.3)", bgcolor: "rgba(58,217,183,0.1)" },
+  Claude: { color: "secondary.light", borderColor: "rgba(255,162,71,0.3)", bgcolor: "rgba(255,162,71,0.1)" },
   LaunchName: { color: "primary.light", borderColor: "rgba(124,92,255,0.3)", bgcolor: "rgba(124,92,255,0.1)" },
 };
 
@@ -138,7 +137,7 @@ function LiveDomainCheck() {
           size="small"
           sx={
             result.purchasable
-              ? { color: "success.main", borderColor: "rgba(61,220,151,0.3)", bgcolor: "rgba(61,220,151,0.1)", border: "1px solid", fontSize: "0.625rem", textTransform: "uppercase" }
+              ? { color: "success.main", borderColor: "rgba(58,217,183,0.3)", bgcolor: "rgba(58,217,183,0.1)", border: "1px solid", fontSize: "0.625rem", textTransform: "uppercase" }
               : { color: "text.disabled", border: "1px solid", borderColor: "divider", fontSize: "0.625rem", textTransform: "uppercase" }
           }
         />
@@ -288,13 +287,13 @@ export function FlashcardDeck() {
 
       <Box sx={{ mt: 4, display: "flex", alignItems: "center", gap: 1.5 }}>
         <IconButton onClick={() => go(-1)} disabled={index === 0} aria-label="Previous card" sx={{ border: 1, borderColor: "divider" }}>
-          <ArrowBackIcon fontSize="small" />
+          <ArrowLeftIcon size={18} aria-hidden />
         </IconButton>
         <Typography variant="caption" sx={{ width: 64, textAlign: "center", color: "text.disabled" }}>
           {index + 1} / {CARDS.length}
         </Typography>
         <IconButton onClick={() => go(1)} disabled={isLast} aria-label="Next card" sx={{ border: 1, borderColor: "divider" }}>
-          <ArrowForwardIcon fontSize="small" />
+          <ArrowRightIcon size={18} aria-hidden />
         </IconButton>
       </Box>
 

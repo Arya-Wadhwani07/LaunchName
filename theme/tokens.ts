@@ -11,36 +11,49 @@
  * palette.
  */
 
+/**
+ * Golden-ratio palette (φ = 1.618…):
+ * - Hues are spaced by the golden angle (360°/φ² ≈ 137.5°) from the brand
+ *   violet at 252°: violet 252° → amber 29.5° → teal 167°. Golden-angle
+ *   spacing keeps hues maximally distinct from each other.
+ * - Neutral lightness grows by ×φ per step (3.6 → 5.8 → 9.4 → 15.2 → 24.7%),
+ *   and text lightness falls by ÷√φ and ÷φ from near-white.
+ * - Usage follows the golden split: ~62% neutral surfaces, ~24% violet,
+ *   ~14% amber/teal accents.
+ */
 export const color = {
-  canvas: "#08080d",
+  canvas: "#08080a",
   surface: {
-    default: "#121218",
-    raised: "#191920",
-    overlay: "#1e1e27",
-    border: "#26262f",
-    borderStrong: "#33333f",
+    default: "#0e0d11",
+    raised: "#16151b",
+    overlay: "#1d1b24",
+    border: "#23212b",
+    borderStrong: "#3a3648",
   },
   ink: {
-    primary: "#f6f6f8",
-    secondary: "#a5a5b3",
-    disabled: "#5c5c68",
+    primary: "#f6f6f9",
+    secondary: "#bfbcc9",
+    disabled: "#9491a1",
   },
   primary: {
     main: "#7c5cff",
-    light: "#a98bff",
-    dark: "#5b3fd6",
-    contrastText: "#f6f6f8",
+    light: "#a18aff",
+    dark: "#5d3fd5",
+    contrastText: "#f6f6f9",
   },
+  // Support color per the golden-ratio formula: base hue (252°), saturation
+  // reduced ~60% (100% → 40%). Softer partner to the violet for labels.
+  support: { main: "#9a8dce", light: "#b9b0de" },
   secondary: {
-    main: "#ff5cad",
-    light: "#ff8cc6",
-    dark: "#d6398a",
-    contrastText: "#f6f6f8",
+    main: "#ffa247",
+    light: "#ffc185",
+    dark: "#f07e0f",
+    contrastText: "#08080a",
   },
-  success: { main: "#3ddc97", dark: "#2bb87c", contrastText: "#08080d" },
-  warning: { main: "#f5b942", dark: "#d9992a", contrastText: "#08080d" },
-  error: { main: "#ff6b6b", dark: "#e04f4f", contrastText: "#08080d" },
-  info: { main: "#5c9dff", dark: "#3f7de0", contrastText: "#08080d" },
+  success: { main: "#3ad9b7", dark: "#1eb897", contrastText: "#08080a" },
+  warning: { main: "#f2cf4c", dark: "#d9b02a", contrastText: "#08080a" },
+  error: { main: "#ff6b6b", dark: "#e04f4f", contrastText: "#08080a" },
+  info: { main: "#5c9dff", dark: "#3f7de0", contrastText: "#08080a" },
 } as const;
 
 /**
@@ -76,6 +89,7 @@ export const motion = {
 } as const;
 
 export const font = {
+  display: "var(--font-display), Georgia, 'Times New Roman', serif",
   sans: "var(--font-inter), system-ui, sans-serif",
   mono: "var(--font-mono), ui-monospace, SFMono-Regular, monospace",
 } as const;

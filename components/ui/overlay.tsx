@@ -7,10 +7,10 @@ import MuiDrawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import type { TransitionProps } from "@mui/material/transitions";
 import { forwardRef } from "react";
+import { XIcon } from "@phosphor-icons/react";
 
 const SlideUp = forwardRef(function SlideUp(
   props: TransitionProps & { children: React.ReactElement },
@@ -42,7 +42,7 @@ export function Modal({
             {title}
           </Typography>
           <IconButton size="small" onClick={onClose} aria-label="Close" edge="end">
-            <CloseIcon fontSize="small" />
+            <XIcon size={18} aria-hidden />
           </IconButton>
         </DialogTitle>
       )}
@@ -70,7 +70,7 @@ export function Drawer({
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 56, px: 2.5, borderBottom: 1, borderColor: "divider", flexShrink: 0 }}>
           <Typography variant="overline">{title}</Typography>
           <IconButton size="small" onClick={onClose} aria-label="Close">
-            <CloseIcon fontSize="small" />
+            <XIcon size={18} aria-hidden />
           </IconButton>
         </Box>
         <Box className="scrollbar-thin" sx={{ flex: 1, overflowY: "auto", p: 2.5 }}>

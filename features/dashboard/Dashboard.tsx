@@ -1,5 +1,6 @@
 "use client";
 
+import { LogoMark } from "@/components/brand/LogoMark";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -7,15 +8,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
-import TravelExploreOutlinedIcon from "@mui/icons-material/TravelExploreOutlined";
-import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
-import RocketLaunchOutlinedIcon from "@mui/icons-material/RocketLaunchOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import BoltOutlinedIcon from "@mui/icons-material/BoltOutlined";
 import { Badge, Button, Select, Option, Card } from "@/components/ui/primitives";
 import { Table, THead, Th, Td, Tr, StatusIndicator, Skeleton, CountUp } from "@/components/ui/data";
 import { EmptyState, ErrorState } from "@/components/ui/status";
@@ -26,16 +18,17 @@ import { AgentDirectory } from "@/features/agents/AgentDirectory";
 import type { Domain } from "@/lib/namecom/types";
 import type { LaunchRecord } from "@/lib/store";
 import type { AgentDiscoveryRecord } from "@/lib/agents/types";
+import { CompassIcon, GearSixIcon, GlobeSimpleIcon, HardDrivesIcon, LightningIcon, ListIcon, RocketLaunchIcon, ShareNetworkIcon, SquaresFourIcon } from "@phosphor-icons/react";
 
 type Tab = "overview" | "domains" | "agents" | "directory" | "dns" | "launches" | "settings";
 
 const TABS: { key: Tab; label: string; icon: React.ReactNode }[] = [
-  { key: "overview", label: "Overview", icon: <DashboardOutlinedIcon fontSize="small" /> },
-  { key: "domains", label: "Domains", icon: <LanguageOutlinedIcon fontSize="small" /> },
-  { key: "agents", label: "Agents", icon: <HubOutlinedIcon fontSize="small" /> },
-  { key: "directory", label: "Agent Directory", icon: <TravelExploreOutlinedIcon fontSize="small" /> },
-  { key: "dns", label: "DNS", icon: <DnsOutlinedIcon fontSize="small" /> },
-  { key: "launches", label: "Activity", icon: <RocketLaunchOutlinedIcon fontSize="small" /> },
+  { key: "overview", label: "Overview", icon: <SquaresFourIcon size={18} aria-hidden /> },
+  { key: "domains", label: "Domains", icon: <GlobeSimpleIcon size={18} aria-hidden /> },
+  { key: "agents", label: "Agents", icon: <ShareNetworkIcon size={18} aria-hidden /> },
+  { key: "directory", label: "Agent Directory", icon: <CompassIcon size={18} aria-hidden /> },
+  { key: "dns", label: "DNS", icon: <HardDrivesIcon size={18} aria-hidden /> },
+  { key: "launches", label: "Activity", icon: <RocketLaunchIcon size={18} aria-hidden /> },
 ];
 
 const SIDEBAR_WIDTH = 244;
@@ -109,7 +102,7 @@ export function Dashboard() {
   const sidebarContent = (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Box component={Link} href="/" sx={{ display: "flex", alignItems: "center", gap: 1, height: 56, px: 2.5, borderBottom: 1, borderColor: "divider", textDecoration: "none", flexShrink: 0 }}>
-        <Box sx={{ width: 20, height: 20, borderRadius: 0.75, background: "linear-gradient(135deg, #7c5cff, #5b3fd6)" }} />
+        <LogoMark size={22} />
         <Typography variant="body2" sx={{ fontWeight: 600, color: "text.primary" }}>
           LaunchName
         </Typography>
@@ -169,7 +162,7 @@ export function Dashboard() {
             "&:hover": { backgroundColor: "action.hover", color: "text.primary" },
           }}
         >
-          <SettingsOutlinedIcon fontSize="small" />
+          <GearSixIcon size={18} aria-hidden />
           Settings
         </Box>
       </Box>
@@ -200,11 +193,11 @@ export function Dashboard() {
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 4, gap: 2 }}>
           <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
             <IconButton onClick={() => setMobileOpen(true)} sx={{ display: { xs: "inline-flex", sm: "none" } }} aria-label="Open navigation">
-              <MenuIcon />
+              <ListIcon size={20} aria-hidden />
             </IconButton>
             <Typography variant="h4">{currentTab?.label ?? "Overview"}</Typography>
           </Box>
-          <Button size="sm" variant="ghost" startIcon={<BoltOutlinedIcon fontSize="small" />} onClick={() => setDebugOpen(true)}>
+          <Button size="sm" variant="ghost" startIcon={<LightningIcon size={18} aria-hidden />} onClick={() => setDebugOpen(true)}>
             API activity
           </Button>
         </Box>
@@ -436,7 +429,7 @@ function StatCard({ label, value, hint }: { label: string; value: string; hint?:
       <Typography variant="overline" sx={{ display: "block" }}>
         {label}
       </Typography>
-      <Typography variant="h3" sx={{ mt: 0.75, color: "text.primary" }}>
+      <Typography variant="h3" sx={{ mt: 0.75, color: "text.primary", fontFamily: "var(--font-inter), system-ui, sans-serif", fontVariantNumeric: "tabular-nums" }}>
         <CountUp value={value} />
       </Typography>
       {hint && (

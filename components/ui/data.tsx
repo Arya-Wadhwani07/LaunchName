@@ -69,7 +69,7 @@ export function ProgressStep({
   detail?: string;
 }) {
   const palette: Record<StepState, { border: string; bg: string; fg: string }> = {
-    done: { border: "rgba(61,220,151,0.4)", bg: "rgba(61,220,151,0.1)", fg: "success.main" },
+    done: { border: "rgba(58,217,183,0.4)", bg: "rgba(58,217,183,0.1)", fg: "success.main" },
     active: { border: "rgba(124,92,255,0.5)", bg: "rgba(124,92,255,0.1)", fg: "primary.light" },
     pending: { border: "divider", bg: "transparent", fg: "text.disabled" },
     error: { border: "rgba(255,107,107,0.4)", bg: "rgba(255,107,107,0.1)", fg: "error.main" },

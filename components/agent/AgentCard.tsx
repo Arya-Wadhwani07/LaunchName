@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CircleIcon from "@mui/icons-material/Circle";
 import { Badge, Card } from "@/components/ui/primitives";
 import { CapabilityChip } from "./CapabilityChip";
 import type { AgentDiscoveryRecord } from "@/lib/agents/types";
+import { CircleIcon } from "@phosphor-icons/react/dist/ssr";
 
 const CATEGORY_LABELS: Record<string, string> = {
   travel: "Travel",
@@ -23,7 +23,7 @@ export function AgentCard({ agent }: { agent: AgentDiscoveryRecord }) {
     <Card interactive sx={{ display: "flex", flexDirection: "column", gap: 2, p: 2.5 }}>
       <Box sx={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 1 }}>
         <Box sx={{ minWidth: 0, display: "flex", alignItems: "center", gap: 0.75 }}>
-          <CircleIcon sx={{ fontSize: 8, color: agent.status !== "draft" ? "success.main" : "text.disabled" }} />
+          <Box component="span" sx={{ display: "inline-flex", color: agent.status !== "draft" ? "success.main" : "text.disabled" }}><CircleIcon size={8} weight="fill" aria-hidden /></Box>
           <Box sx={{ minWidth: 0 }}>
             <Typography variant="body1" noWrap sx={{ fontWeight: 600, color: "text.primary", fontSize: "0.9375rem" }}>
               {agent.name}

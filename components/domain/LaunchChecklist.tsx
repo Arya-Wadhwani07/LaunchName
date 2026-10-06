@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CheckIcon from "@mui/icons-material/Check";
+import { CheckIcon } from "@phosphor-icons/react/dist/ssr";
 
 export interface ChecklistItem {
   label: string;
@@ -28,13 +28,13 @@ export function LaunchChecklist({ items }: { items: ChecklistItem[] }) {
               flexShrink: 0,
               borderRadius: "50%",
               border: 1,
-              borderColor: item.done ? "rgba(61,220,151,0.4)" : "divider",
-              backgroundColor: item.done ? "rgba(61,220,151,0.1)" : "transparent",
+              borderColor: item.done ? "rgba(58,217,183,0.4)" : "divider",
+              backgroundColor: item.done ? "rgba(58,217,183,0.1)" : "transparent",
               color: "success.main",
               transition: "background-color 250ms ease, border-color 250ms ease",
             }}
           >
-            {item.done && <CheckIcon sx={{ fontSize: 13 }} />}
+            {item.done && <CheckIcon size={13} weight="bold" aria-hidden />}
           </Box>
           <Typography variant="body2" sx={{ color: item.done ? "text.primary" : "text.disabled" }}>
             {item.label}

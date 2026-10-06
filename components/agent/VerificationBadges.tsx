@@ -1,8 +1,7 @@
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CheckIcon from "@mui/icons-material/Check";
-import RemoveIcon from "@mui/icons-material/Remove";
 import type { AgentVerificationState } from "@/lib/agents/types";
+import { CheckIcon, MinusIcon } from "@phosphor-icons/react/dist/ssr";
 
 interface Row {
   label: string;
@@ -53,12 +52,12 @@ export function VerificationBadges({ verification }: { verification: AgentVerifi
               flexShrink: 0,
               borderRadius: "50%",
               border: 1,
-              borderColor: r.done ? "rgba(61,220,151,0.4)" : "divider",
-              backgroundColor: r.done ? "rgba(61,220,151,0.1)" : "transparent",
+              borderColor: r.done ? "rgba(58,217,183,0.4)" : "divider",
+              backgroundColor: r.done ? "rgba(58,217,183,0.1)" : "transparent",
               color: r.done ? "success.main" : "text.disabled",
             }}
           >
-            {r.done ? <CheckIcon sx={{ fontSize: 13 }} /> : <RemoveIcon sx={{ fontSize: 12 }} />}
+            {r.done ? <CheckIcon size={13} weight="bold" aria-hidden /> : <MinusIcon size={12} weight="bold" aria-hidden />}
           </Box>
           <Box sx={{ minWidth: 0 }}>
             <Typography variant="body2" sx={{ color: r.done ? "text.primary" : "text.secondary" }}>

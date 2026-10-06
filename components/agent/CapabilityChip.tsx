@@ -35,7 +35,7 @@ export function CapabilityInput({
   placeholder?: string;
 }) {
   return (
-    <Box sx={{ mt: 1, display: "flex", gap: 1 }}>
+    <Box sx={{ display: "flex", gap: 2 }}>
       <TextField
         size="small"
         value={value}

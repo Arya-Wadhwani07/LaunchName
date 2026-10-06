@@ -3,11 +3,26 @@
 import { Badge, Button } from "@/components/ui/primitives";
 import type { BrandSuggestion } from "@/lib/brand";
 
-export function BrandCard({ brand, onExplore }: { brand: BrandSuggestion; onExplore: (brand: BrandSuggestion) => void }) {
+export function BrandCard({
+  brand,
+  onExplore,
+  selected = false,
+}: {
+  brand: BrandSuggestion;
+  onExplore: (brand: BrandSuggestion) => void;
+  selected?: boolean;
+}) {
   return (
-    <div className="elevate flex flex-col justify-between gap-4 rounded-lg border border-surface-border bg-surface p-5 shadow-elevation-1 hover:border-ink/15">
+    <div
+      className={`elevate flex h-full flex-col justify-between gap-4 rounded-lg border bg-surface p-5 shadow-elevation-1 ${
+        selected ? "border-accent/70 shadow-glow-accent" : "border-surface-border hover:border-ink/15"
+      }`}
+    >
       <div>
-        <h3 className="text-lg font-semibold tracking-tight text-ink">{brand.name}</h3>
+        <div className="flex items-center justify-between gap-2">
+          <h3 className="text-lg font-semibold tracking-tight text-ink">{brand.name}</h3>
+          {selected && <Badge variant="accent">Your pick</Badge>}
+        </div>
         <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">{brand.tagline}</p>
         <div className="mt-3 flex flex-wrap gap-1.5">
           {brand.personality.map((trait) => (
@@ -24,8 +39,8 @@ export function BrandCard({ brand, onExplore }: { brand: BrandSuggestion; onExpl
           ))}
         </div>
       </div>
-      <Button variant="secondary" onClick={() => onExplore(brand)}>
-        Explore domains →
+      <Button variant={selected ? "primary" : "secondary"} onClick={() => onExplore(brand)}>
+        {selected ? "Continue with this brand →" : "Explore domains →"}
       </Button>
     </div>
   );

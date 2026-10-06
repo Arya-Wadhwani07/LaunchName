@@ -1,3 +1,4 @@
+import { LogoMark } from "@/components/brand/LogoMark";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -12,7 +13,7 @@ export default function AgentConnectPage({ params }: { params: { domain: string 
       <Box component="nav" sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", maxWidth: 960, mx: "auto", px: 3, py: 3 }}>
           <Box component={Link} href="/" sx={{ display: "flex", alignItems: "center", gap: 1, textDecoration: "none" }}>
-            <Box sx={{ width: 24, height: 24, borderRadius: 1, background: "linear-gradient(135deg, #7c5cff, #5b3fd6)" }} />
+            <LogoMark size={24} />
             <Typography sx={{ fontWeight: 600, color: "text.primary" }}>LaunchName</Typography>
           </Box>
           <Box sx={{ display: "flex", alignItems: "center", gap: 2.5 }}>

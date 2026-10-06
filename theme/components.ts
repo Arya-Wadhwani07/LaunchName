@@ -1,5 +1,11 @@
+import { createElement } from "react";
 import type { Components, Theme } from "@mui/material/styles";
+import { CaretDownIcon, CheckCircleIcon, InfoIcon, WarningIcon, WarningOctagonIcon } from "@phosphor-icons/react";
 import { color, radius, motion } from "./tokens";
+
+// MUI's own built-in icons (alerts, select arrow) swapped for Phosphor so the
+// whole site uses one icon set.
+const alertIcon = (Icon: typeof InfoIcon) => createElement(Icon, { size: 20, weight: "fill" });
 
 /**
  * Centralized component overrides — this is what the build brief calls
@@ -11,7 +17,23 @@ export function buildComponents(theme: Theme): Components<Theme> {
   return {
     MuiCssBaseline: {
       styleOverrides: {
-        "*": { boxSizing: "border-box" },
+        // Restores the parts of Tailwind's Preflight (disabled in
+        // tailwind.config.ts) that Tailwind utilities rely on: `border`
+        // only sets a width and expects a solid style here, and bare
+        // <button>s otherwise get the browser's gray fill.
+        "*, ::before, ::after": {
+          boxSizing: "border-box",
+          borderWidth: 0,
+          borderStyle: "solid",
+          borderColor: color.surface.border,
+        },
+        "ol, ul, menu": { listStyle: "none", margin: 0, padding: 0 },
+        button: {
+          backgroundColor: "transparent",
+          backgroundImage: "none",
+          color: "inherit",
+          font: "inherit",
+        },
         html: { colorScheme: "dark" },
         body: {
           backgroundColor: color.canvas,
@@ -226,12 +248,26 @@ export function buildComponents(theme: Theme): Components<Theme> {
       },
     },
 
+    MuiSelect: {
+      defaultProps: {
+        IconComponent: (props: { className?: string }) => createElement(CaretDownIcon, { size: 16, className: props.className, style: { right: 12 } }),
+      },
+    },
+
     MuiAlert: {
+      defaultProps: {
+        iconMapping: {
+          success: alertIcon(CheckCircleIcon),
+          info: alertIcon(InfoIcon),
+          warning: alertIcon(WarningIcon),
+          error: alertIcon(WarningOctagonIcon),
+        },
+      },
       styleOverrides: {
         root: { borderRadius: radius.md, border: "1px solid transparent" },
-        colorSuccess: { backgroundColor: "rgba(61,220,151,0.1)", borderColor: "rgba(61,220,151,0.25)", color: color.success.main },
+        colorSuccess: { backgroundColor: "rgba(58,217,183,0.1)", borderColor: "rgba(58,217,183,0.25)", color: color.success.main },
         colorError: { backgroundColor: "rgba(255,107,107,0.1)", borderColor: "rgba(255,107,107,0.25)", color: color.error.main },
-        colorWarning: { backgroundColor: "rgba(245,185,66,0.1)", borderColor: "rgba(245,185,66,0.25)", color: color.warning.main },
+        colorWarning: { backgroundColor: "rgba(242,207,76,0.1)", borderColor: "rgba(242,207,76,0.25)", color: color.warning.main },
         colorInfo: { backgroundColor: "rgba(124,92,255,0.1)", borderColor: "rgba(124,92,255,0.25)", color: color.primary.light },
       },
     },

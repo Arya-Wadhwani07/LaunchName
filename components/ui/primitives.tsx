@@ -95,9 +95,9 @@ export function Card({
 }
 
 const BADGE_VARIANT_SX = {
-  available: { color: "success.main", borderColor: alpha("#3ddc97", 0.25), backgroundColor: alpha("#3ddc97", 0.1) },
+  available: { color: "success.main", borderColor: alpha("#3ad9b7", 0.25), backgroundColor: alpha("#3ad9b7", 0.1) },
   taken: { color: "text.disabled", borderColor: "divider", backgroundColor: "action.hover" },
-  premium: { color: "warning.main", borderColor: alpha("#f5b942", 0.25), backgroundColor: alpha("#f5b942", 0.1) },
+  premium: { color: "warning.main", borderColor: alpha("#f2cf4c", 0.25), backgroundColor: alpha("#f2cf4c", 0.1) },
   error: { color: "error.main", borderColor: alpha("#ff6b6b", 0.25), backgroundColor: alpha("#ff6b6b", 0.1) },
   neutral: { color: "text.secondary", borderColor: "divider", backgroundColor: "background.paper" },
   accent: { color: "primary.light", borderColor: alpha("#7c5cff", 0.25), backgroundColor: alpha("#7c5cff", 0.1) },
@@ -160,17 +160,21 @@ export function Switch({
   onChange,
   label,
   hint,
+  disabled = false,
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;
   label: string;
   hint?: string;
+  disabled?: boolean;
 }) {
   const theme = useTheme();
   return (
     <Box
-      onClick={() => onChange(!checked)}
+      onClick={() => !disabled && onChange(!checked)}
+      aria-disabled={disabled || undefined}
       sx={{
+        opacity: disabled ? 0.6 : 1,
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
@@ -179,24 +183,30 @@ export function Switch({
         borderRadius: 1,
         border: `1px solid ${theme.palette.divider}`,
         backgroundColor: "background.default",
-        px: 1.5,
-        py: 1,
-        cursor: "pointer",
+        px: 4,
+        py: 3,
+        cursor: disabled ? "not-allowed" : "pointer",
         transition: `border-color 150ms ease`,
         "&:hover": { borderColor: alpha(theme.palette.text.primary, 0.2) },
       }}
     >
       <Box>
-        <Typography variant="body1" color="text.primary" sx={{ fontSize: "0.875rem" }}>
+        <Typography variant="body1" color="text.primary" sx={{ fontSize: "0.9375rem", fontWeight: 500 }}>
           {label}
         </Typography>
         {hint && (
-          <Typography variant="caption" component="div">
+          <Typography variant="caption" component="div" sx={{ mt: 1 }}>
             {hint}
           </Typography>
         )}
       </Box>
-      <MuiSwitch checked={checked} onChange={() => onChange(!checked)} onClick={(e) => e.stopPropagation()} />
+      <MuiSwitch
+        checked={checked}
+        disabled={disabled}
+        onChange={() => onChange(!checked)}
+        onClick={(e) => e.stopPropagation()}
+        slotProps={{ input: { "aria-label": label } }}
+      />
     </Box>
   );
 }

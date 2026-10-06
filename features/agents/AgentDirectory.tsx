@@ -6,14 +6,13 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { AgentCard } from "@/components/agent/AgentCard";
 import { AgentNetworkGraph } from "@/components/agent/AgentNetworkGraph";
 import { Button, Card } from "@/components/ui/primitives";
 import { EmptyState, ErrorState } from "@/components/ui/status";
 import { Skeleton } from "@/components/ui/data";
 import type { AgentCategory, AgentDiscoveryRecord, DomainAgentIndex } from "@/lib/agents/types";
+import { ArrowRightIcon, MagnifyingGlassIcon } from "@phosphor-icons/react";
 
 const CATEGORIES: { key: AgentCategory | "all"; label: string }[] = [
   { key: "all", label: "All" },
@@ -144,7 +143,7 @@ export function AgentDirectory() {
                           {a.host}
                         </Typography>
                       </Box>
-                      <ArrowForwardIcon sx={{ fontSize: 16, color: "primary.light" }} />
+                      <Box component="span" sx={{ display: "inline-flex", color: "primary.light" }}><ArrowRightIcon size={16} aria-hidden /></Box>
                     </Box>
                   ))}
                 </Box>
@@ -166,7 +165,7 @@ export function AgentDirectory() {
             placeholder="What can this agent help me with?"
             size="small"
             fullWidth
-            slotProps={{ input: { startAdornment: <SearchIcon fontSize="small" sx={{ mr: 1, color: "text.disabled" }} /> } }}
+            slotProps={{ input: { startAdornment: <Box component="span" sx={{ display: "inline-flex", mr: 1, color: "text.disabled" }}><MagnifyingGlassIcon size={18} aria-hidden /></Box> } }}
           />
           <Button variant="secondary" onClick={() => load()} sx={{ flexShrink: 0 }}>
             Search

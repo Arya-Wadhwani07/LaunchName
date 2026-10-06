@@ -10,26 +10,30 @@ import type { BrandSuggestion } from "@/lib/brand";
 
 export function BrandStep() {
   const { state, dispatch } = useLaunch();
-  const fetchedFor = useRef<string | null>(null);
+  // Only dedupes React Strict Mode's double effect; whether brands are
+  // already loaded lives in the shared wizard state so it survives Back.
+  const inFlight = useRef<string | null>(null);
 
   useEffect(() => {
-    if (!state.idea || fetchedFor.current === state.idea) return;
-    fetchedFor.current = state.idea;
+    if (!state.hydrated || !state.idea) return;
+    if (state.brandsFor === state.idea || state.brandsLoading || inFlight.current === state.idea) return;
+    inFlight.current = state.idea;
     loadBrands();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.idea]);
+  }, [state.hydrated, state.idea, state.brandsFor]);
 
   async function loadBrands() {
+    const idea = state.idea;
     dispatch({ type: "BRANDS_LOADING" });
     try {
       const res = await fetch("/api/brand/generate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ idea: state.idea }),
+        body: JSON.stringify({ idea }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error?.message ?? "Couldn't generate brand names.");
-      dispatch({ type: "BRANDS_SUCCESS", brands: data.brands });
+      dispatch({ type: "BRANDS_SUCCESS", brands: data.brands, forIdea: idea });
     } catch (err) {
       dispatch({ type: "BRANDS_ERROR", error: err instanceof Error ? err.message : "Something went wrong." });
     }
@@ -62,7 +66,7 @@ export function BrandStep() {
             ? Array.from({ length: 6 }).map((_, i) => <BrandCardSkeleton key={i} />)
             : state.brands.map((brand, i) => (
                 <Box key={brand.name} className="stagger-item" style={{ "--stagger-index": i } as React.CSSProperties}>
-                  <BrandCard brand={brand} onExplore={explore} />
+                  <BrandCard brand={brand} onExplore={explore} selected={state.selectedBrand?.name === brand.name} />
                 </Box>
               ))}
         </Box>

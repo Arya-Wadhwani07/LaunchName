@@ -4,14 +4,13 @@ import { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
-import CircleIcon from "@mui/icons-material/Circle";
 import { Badge, Button, Card } from "@/components/ui/primitives";
 import { CapabilityChip } from "@/components/agent/CapabilityChip";
 import { HandshakeTimeline } from "@/components/agent/HandshakeTimeline";
 import { ErrorState } from "@/components/ui/status";
 import { Skeleton } from "@/components/ui/data";
 import type { AgentDiscoveryRecord, HandshakeStepResult, AgentConnectorKind } from "@/lib/agents/types";
+import { CircleIcon, PaperPlaneRightIcon } from "@phosphor-icons/react";
 
 const REQUESTER_NAME = "StudentPlanner";
 const REQUESTER_CAPABILITIES = ["Planning", "Scheduling"];
@@ -194,7 +193,7 @@ export function AgentConnectConsole({ host }: { host: string }) {
             size="small"
             fullWidth
           />
-          <Button onClick={send} disabled={!message.trim() || sending} endIcon={!sending && <SendOutlinedIcon fontSize="small" />} sx={{ flexShrink: 0 }}>
+          <Button onClick={send} disabled={!message.trim() || sending} endIcon={!sending && <PaperPlaneRightIcon size={18} aria-hidden />} sx={{ flexShrink: 0 }}>
             {sending ? "Sending…" : "Send to Agent"}
           </Button>
         </Box>
@@ -202,7 +201,7 @@ export function AgentConnectConsole({ host }: { host: string }) {
         {response && (
           <Box className="animate-fade-up" sx={{ mt: 2, borderRadius: 1.5, border: 1, borderColor: "rgba(124,92,255,0.2)", backgroundColor: "rgba(124,92,255,0.05)", p: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 0.75, mb: 0.5 }}>
-              <CircleIcon sx={{ fontSize: 6, color: "success.main" }} />
+              <Box component="span" sx={{ display: "inline-flex", color: "success.main" }}><CircleIcon size={6} weight="fill" aria-hidden /></Box>
               <Typography variant="overline">{agent.name} responded</Typography>
             </Box>
             <Typography variant="body2" sx={{ color: "text.primary" }}>

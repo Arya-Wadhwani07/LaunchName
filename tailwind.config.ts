@@ -10,39 +10,41 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        canvas: "#08080d",
+        canvas: "#08080a",
         surface: {
           // A faint cool/violet tint instead of true neutral gray — reads as
           // "designed" rather than default-dark-mode gray, while staying
           // subtle enough not to fight the accent color for attention.
-          DEFAULT: "#121218",
-          raised: "#191920",
-          overlay: "#1e1e27",
-          border: "#26262f",
+          DEFAULT: "#0e0d11",
+          raised: "#16151b",
+          overlay: "#1d1b24",
+          border: "#23212b",
         },
         ink: {
-          DEFAULT: "#f6f6f8",
-          muted: "#a5a5b3",
-          faint: "#71717f",
+          DEFAULT: "#f6f6f9",
+          muted: "#bfbcc9",
+          faint: "#9491a1",
         },
         accent: {
           DEFAULT: "#7c5cff",
-          soft: "#a98bff",
-          dim: "#5b3fd6",
+          soft: "#a18aff",
+          dim: "#5d3fd5",
           bright: "#9d7bff",
         },
         // Secondary accent — used sparingly (gradient pairings, a handful of
         // highlight moments) so the palette reads as considered, not busy.
         accent2: {
-          DEFAULT: "#ff5cad",
-          soft: "#ff8cc6",
-          dim: "#d6398a",
+          DEFAULT: "#ffa247",
+          soft: "#ffc185",
+          dim: "#f07e0f",
         },
-        good: "#3ddc97",
-        warn: "#f5b942",
+        support: { DEFAULT: "#9a8dce", soft: "#b9b0de" },
+        good: "#3ad9b7",
+        warn: "#f2cf4c",
         bad: "#ff6b6b",
       },
       fontFamily: {
+        display: ["var(--font-display)", "Georgia", "serif"],
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },

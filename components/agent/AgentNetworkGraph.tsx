@@ -66,8 +66,8 @@ export function AgentNetworkGraph({
         >
           <circle
             r={30}
-            fill={agent.status === "verified" ? "#132a22" : "#17171b"}
-            stroke={agent.status === "verified" ? "#3ddc97" : "#242429"}
+            fill={agent.status === "verified" ? "#112c26" : "#17171b"}
+            stroke={agent.status === "verified" ? "#3ad9b7" : "#242429"}
             strokeWidth={1.5}
             className={cn("transition-all", hovered === agent.id && "drop-shadow-[0_0_8px_rgba(124,92,255,0.4)]")}
           />

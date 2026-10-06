@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { Badge, Button, Card } from "@/components/ui/primitives";
 import { CapabilityChip } from "@/components/agent/CapabilityChip";
 import { VerificationBadges } from "@/components/agent/VerificationBadges";
@@ -12,6 +11,7 @@ import { ErrorState } from "@/components/ui/status";
 import { Skeleton } from "@/components/ui/data";
 import { Modal } from "@/components/ui/overlay";
 import type { AgentDiscoveryRecord, AgentManifest } from "@/lib/agents/types";
+import { ArrowRightIcon } from "@phosphor-icons/react";
 
 export function AgentProfile({ host }: { host: string }) {
   const [agent, setAgent] = useState<AgentDiscoveryRecord | null>(null);
@@ -129,7 +129,7 @@ export function AgentProfile({ host }: { host: string }) {
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: 1, mt: 3 }}>
             <Link href={`/agents/${agent.host}/connect`} style={{ width: "100%" }}>
-              <Button size="lg" fullWidth endIcon={<ArrowForwardIcon />}>
+              <Button size="lg" fullWidth endIcon={<ArrowRightIcon size={20} aria-hidden />}>
                 Connect to Agent
               </Button>
             </Link>

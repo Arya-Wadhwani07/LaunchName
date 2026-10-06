@@ -2,9 +2,8 @@
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import CheckIcon from "@mui/icons-material/Check";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 import type { HandshakeStepResult } from "@/lib/agents/types";
+import { CheckIcon, ExclamationMarkIcon } from "@phosphor-icons/react";
 
 function formatTime(iso: string) {
   try {
@@ -37,12 +36,12 @@ export function HandshakeTimeline({ steps }: { steps: HandshakeStepResult[] }) {
               flexShrink: 0,
               borderRadius: "50%",
               border: 1,
-              borderColor: step.status === "done" ? "rgba(61,220,151,0.4)" : "rgba(255,107,107,0.4)",
-              backgroundColor: step.status === "done" ? "rgba(61,220,151,0.1)" : "rgba(255,107,107,0.1)",
+              borderColor: step.status === "done" ? "rgba(58,217,183,0.4)" : "rgba(255,107,107,0.4)",
+              backgroundColor: step.status === "done" ? "rgba(58,217,183,0.1)" : "rgba(255,107,107,0.1)",
               color: step.status === "done" ? "success.main" : "error.main",
             }}
           >
-            {step.status === "done" ? <CheckIcon sx={{ fontSize: 12 }} /> : <PriorityHighIcon sx={{ fontSize: 12 }} />}
+            {step.status === "done" ? <CheckIcon size={12} weight="bold" aria-hidden /> : <ExclamationMarkIcon size={12} weight="bold" aria-hidden />}
           </Box>
           <Box sx={{ minWidth: 0 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>

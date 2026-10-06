@@ -4,17 +4,11 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
-import AlternateEmailOutlinedIcon from "@mui/icons-material/AlternateEmailOutlined";
-import VerifiedOutlinedIcon from "@mui/icons-material/VerifiedOutlined";
-import HubOutlinedIcon from "@mui/icons-material/HubOutlined";
-import DnsOutlinedIcon from "@mui/icons-material/DnsOutlined";
 import { Badge } from "@/components/ui/primitives";
 import { Td, Tr } from "@/components/ui/data";
 import { DISCOVERY_TXT_HOST_PREFIX } from "@/lib/agents/manifest";
 import type { DnsRecord } from "@/lib/namecom/types";
+import { EnvelopeSimpleIcon, GlobeSimpleIcon, HardDrivesIcon, PencilSimpleIcon, SealCheckIcon, ShareNetworkIcon, TrashIcon } from "@phosphor-icons/react";
 
 export function DnsRecordRow({
   record,
@@ -42,12 +36,12 @@ export function DnsRecordRow({
         <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 0.5 }}>
           <Tooltip title="Edit record">
             <IconButton size="small" onClick={() => onEdit(record)}>
-              <EditOutlinedIcon fontSize="small" />
+              <PencilSimpleIcon size={18} aria-hidden />
             </IconButton>
           </Tooltip>
           <Tooltip title="Delete record">
             <IconButton size="small" onClick={() => onDelete(record)} disabled={deleting} sx={{ "&:hover": { color: "error.main", backgroundColor: "rgba(255,107,107,0.1)" } }}>
-              <DeleteOutlineIcon fontSize="small" />
+              <TrashIcon size={18} aria-hidden />
             </IconButton>
           </Tooltip>
         </Box>
@@ -57,14 +51,14 @@ export function DnsRecordRow({
 }
 
 const FRIENDLY_META: Record<string, { title: string; description: string; icon: React.ReactNode }> = {
-  A: { title: "Website", description: "Where your site's traffic is routed", icon: <LanguageOutlinedIcon fontSize="small" /> },
-  CNAME: { title: "Website alias", description: "Points a subdomain at your site", icon: <LanguageOutlinedIcon fontSize="small" /> },
-  MX: { title: "Email", description: "Where your email is delivered", icon: <AlternateEmailOutlinedIcon fontSize="small" /> },
-  TXT: { title: "Verification", description: "Ownership / verification record", icon: <VerifiedOutlinedIcon fontSize="small" /> },
-  AAAA: { title: "Website (IPv6)", description: "IPv6 address for your site", icon: <LanguageOutlinedIcon fontSize="small" /> },
-  ANAME: { title: "Website (root alias)", description: "Root-domain alias to a hostname", icon: <LanguageOutlinedIcon fontSize="small" /> },
-  NS: { title: "Nameservers", description: "Delegates a subdomain to other DNS servers", icon: <DnsOutlinedIcon fontSize="small" /> },
-  SRV: { title: "Service", description: "Points a service to a host and port", icon: <DnsOutlinedIcon fontSize="small" /> },
+  A: { title: "Website", description: "Where your site's traffic is routed", icon: <GlobeSimpleIcon size={18} aria-hidden /> },
+  CNAME: { title: "Website alias", description: "Points a subdomain at your site", icon: <GlobeSimpleIcon size={18} aria-hidden /> },
+  MX: { title: "Email", description: "Where your email is delivered", icon: <EnvelopeSimpleIcon size={18} aria-hidden /> },
+  TXT: { title: "Verification", description: "Ownership / verification record", icon: <SealCheckIcon size={18} aria-hidden /> },
+  AAAA: { title: "Website (IPv6)", description: "IPv6 address for your site", icon: <GlobeSimpleIcon size={18} aria-hidden /> },
+  ANAME: { title: "Website (root alias)", description: "Root-domain alias to a hostname", icon: <GlobeSimpleIcon size={18} aria-hidden /> },
+  NS: { title: "Nameservers", description: "Delegates a subdomain to other DNS servers", icon: <HardDrivesIcon size={18} aria-hidden /> },
+  SRV: { title: "Service", description: "Points a service to a host and port", icon: <HardDrivesIcon size={18} aria-hidden /> },
 };
 
 function isAgentDiscoveryRecord(record: DnsRecord): boolean {
@@ -73,8 +67,8 @@ function isAgentDiscoveryRecord(record: DnsRecord): boolean {
 
 export function FriendlyDnsCard({ record }: { record: DnsRecord }) {
   const meta = isAgentDiscoveryRecord(record)
-    ? { title: "Agent discovery", description: "Points AI agents at this domain's LaunchName manifest", icon: <HubOutlinedIcon fontSize="small" /> }
-    : (record.type && FRIENDLY_META[record.type]) || { title: record.type ?? "Record", description: "", icon: <DnsOutlinedIcon fontSize="small" /> };
+    ? { title: "Agent discovery", description: "Points AI agents at this domain's LaunchName manifest", icon: <ShareNetworkIcon size={18} aria-hidden /> }
+    : (record.type && FRIENDLY_META[record.type]) || { title: record.type ?? "Record", description: "", icon: <HardDrivesIcon size={18} aria-hidden /> };
   return (
     <Box
       sx={{

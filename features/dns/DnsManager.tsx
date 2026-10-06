@@ -5,8 +5,6 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import RefreshOutlinedIcon from "@mui/icons-material/RefreshOutlined";
 import { Button, Input, Select, Option } from "@/components/ui/primitives";
 import { Table, THead, Th, Skeleton } from "@/components/ui/data";
 import { Modal } from "@/components/ui/overlay";
@@ -14,6 +12,7 @@ import { EmptyState, ErrorState } from "@/components/ui/status";
 import { useToast } from "@/components/ui/status";
 import { DnsRecordRow, FriendlyDnsCard } from "@/components/domain/DnsRecordRow";
 import type { DnsRecord, DnsRecordType } from "@/lib/namecom/types";
+import { ArrowClockwiseIcon, PlusIcon } from "@phosphor-icons/react";
 
 const RECORD_TYPES: DnsRecordType[] = ["A", "AAAA", "CNAME", "ANAME", "MX", "NS", "SRV", "TXT"];
 
@@ -139,10 +138,10 @@ export function DnsManager({ domainName }: { domainName: string }) {
           <ToggleButton value="advanced">Advanced</ToggleButton>
         </ToggleButtonGroup>
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Button size="sm" variant="ghost" onClick={load} startIcon={<RefreshOutlinedIcon fontSize="small" />}>
+          <Button size="sm" variant="ghost" onClick={load} startIcon={<ArrowClockwiseIcon size={18} aria-hidden />}>
             Refresh
           </Button>
-          <Button size="sm" onClick={openCreate} startIcon={<AddOutlinedIcon fontSize="small" />}>
+          <Button size="sm" onClick={openCreate} startIcon={<PlusIcon size={18} aria-hidden />}>
             Add record
           </Button>
         </Box>
